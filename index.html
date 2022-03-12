@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contact | Form</title>
+    </head>
+    <body>
+        <!-- Header  -->
+        <header>
+            <h1>Contact Details</h1>
+        </header>
+    
+        <!-- form -->
+        <div id="submitted-notification" style="padding:20px;margin-bottom:15px;max-width:500px;background-color:darkgrey;display:none;">
+            <div style="color:red;font-size:1.5rem;">Your form has been successfully submitted</div>
+        </div>
+        <form id="contact-form" onsubmit="submitForm(event);">
+            <div>
+                <label>First Name</label>
+                <input type="text" name="firstName" required>
+            </div>
+            <br>
+
+            <div>
+                <label>Last Name</label>
+                <input type="text" name="lastName" required>
+            </div>
+            <br>
+
+            <div>
+                <label>Age</label>
+                <input type="number" name="age" value="30" required>
+            </div>
+            <br>
+
+            <div>
+                <label>Date of Birth</label>
+                <input type="date" name="birthday" required>
+            </div>
+            <br>
+
+            <div>
+                <label>Phone Number</label>
+                <input type="tel" name="phone" required>
+            </div>
+            <br>
+
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+            <br>
+
+            <div>
+                <label>I.D Type</label>
+                <input type="card" name="CardNumber" required>
+            </div>
+            <br>
+            
+            <div>
+                <label>I.D card number</label>
+                <input type="card" name="CardNumber" required>
+            </div>
+            <br>
+        
+            <div>
+                <label for="gender"> Select you gender</label>
+                <select name="gender" required>
+                    <option value="none" selected>Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">other</option>
+                </select>
+            </div>
+            <br>
+            
+            <div>
+                <label>Marital Status</label>
+                <select name="marital_status" required>
+                    <option value="">-Select Marital Status-</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Widowed">Widowed</option>
+                    <option value="Separated">Separated</option>
+                    <option value="Divorced">Divorced</option>
+                </select>
+            </div>
+            <br>
+
+            <div>
+                <button type="submit">SEND</button>
+            </div>
+        </form>
+    </body>
+    <script>
+        const submitForm = event => {
+            event.preventDefault();
+
+            const form = document.getElementById('contact-form');
+
+            formData = new FormData(form);
+
+            const query = new URLSearchParams(formData).toString();
+
+            const httpClient = new XMLHttpRequest();
+                
+            httpClient.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const submittedNotification = document.getElementById('submitted-notification');
+
+                    submittedNotification.setAttribute('style', 'padding:20px;margin-bottom:15px;max-width:500px;background-color:darkgrey;');
+                }
+            };
+
+            httpClient.open("POST", "/", true);
+
+            httpClient.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            httpClient.send(query);
+        };
+    </script>
+</html>
